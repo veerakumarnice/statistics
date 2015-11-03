@@ -1,0 +1,84 @@
+---
+title: "Region of living and the Habit of newspaper Reading"
+date: "Nov 2, 2015"
+output:
+  html_document:
+    theme: cerulean
+---
+
+<!-- For more info on RMarkdown see http://rmarkdown.rstudio.com/ -->
+
+<!-- Enter the code required to load your data in the space below. The data will be loaded but the line of code won't show up in your write up (echo=FALSE) in order to save space-->
+```{r echo=FALSE}
+load(url("http://bit.ly/dasi_gss_data"))
+```
+
+<!-- In the remainder of the document, add R code chunks as needed -->
+
+### Introduction:
+
+    Does the region of living influence the habit of reading newspaper ? [Data: region - the region in which one lives e.g New England, Middle Atlantic etc... ; news - How often does one reads newspaper - Everyday, Few times a week, less than one week, etc...]
+    If the habit of reading newspaper changes from region to region it may result in propagating false information towards the people or even the good information like the announcements won't reach properly. Hence knowing how region and the newspaper are related is of our importantance.
+
+
+### Data:
+    
+    Data Collection : The General Social Survey (GSS) is a sociological survey used to collect data on demographic characteristics and attitudes of residents of the United States. The survey is conducted face-to-face with an in-person interview by the National Opinion Research Center at the University of Chicago, of adults (18+) in randomly selected households. The survey was conducted every year from 1972 to 1994 (except in 1979, 1981, and 1992).
+
+    Cases : The units of observation are the people of the United states of America who underwent the GSS.
+    
+    Variables : The two variables are region and news from the GSS Data set. The region variable describes the region of the person (e.g. New England, Middle Atlantic, etc..) which is a categorical type and the news describes how often a person reads the newspaper (e.g. Everday, Few times a week, Once a week, etc...)  which is a ordinal categorical variable.
+    
+    Study : The type of study is observational. Because it is a survey taken on the U.S population about the characteristics and attitudes of residents of U.S.
+    
+    Scope of inference - generalizability : Out of 57,061 people surveyed 35,689 only responded to the survey who were willing to answer for this question. Thus this may end up with voluntary bias and cannot be generalized.
+    
+    Scope of inference - causality : This data cannot be used to establish casual links between the region and the habit of newspaper eventhough the sample population represent whole US population, this column is not answered by everybody and there are some missing data. Hence even if the data provide correlation establishing a casual relations is not possible without control and treatmeent groups.
+    
+### Exploratory data analysis:
+
+```{r}
+survey <- gss[c("region","news")]
+survey <- subset(survey, !is.na(survey$news))
+my_table <- table(survey$region,survey$news)
+mosaicplot(my_table)
+```
+
+    From the Mosaicplot is it observed that the newspaper reding habbit differs for every region and it may or may not be true. 
+
+### Inference:
+
+    To start our inference we start with the Chi-Square hypothesis test because this analysis involves two categorical variables that has two or more values.
+    Before starting the hypothesis test we have to check whether the data we are using satisfies the coditions  need for the chisquared test of independence.It is obvious that 57000 is less than 10% of the US population and each obseravtion is indepedent of the other. It is also evident that the sampled population is large enough to 
+    Null hypothesis : There is nothing going on. The newspaper reading habbit and the 
+
+```{r}
+my_table
+```
+
+    From the above table it is evident that the chi-squared test analysis gives the following results.
+
+```{r}
+summary(my_table)
+```
+
+    Thus from the above hypothesis test there is a strong evidence that something unsual going on and we reject the Null hypothesis H0 and support the Alternative hypothesis HA.
+
+### Conclusion:
+
+    From the above results we conclude that even though the habit of reading newspaper provide convincing evidence about the dependency we may not be sure abou the results. There are other factors like population getting conentrated over a particular city and newpaper distributers targettting those areas etc.. which may cause the change in habit these blocking variables has to be controlled with random assignment so that casuality relationship is obtained. Further research with control and treatment groups is needed.
+
+### References:
+    The below link cotains the details about the GSS. It provides the link for the data as well as the codebook.
+    
+    https://d396qusza40orc.cloudfront.net/statistics%2Fproject%2Fgss1.html
+
+    Data citation   : http://doi.org/10.3886/ICPSR34802.v1
+    Data set        : http://bit.ly/dasi_gss_data
+
+### Appendix:
+    The below given sample data provides how the worked out data looks like.
+```{r}
+head(survey, n= 50)
+```
+
